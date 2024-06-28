@@ -1,21 +1,41 @@
 package org.firstinspires.ftc.teamcode.opmodes.test;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.DcMotor;
 
-public class TestDrivebase extends LinearOpMode {
-    /**
-     * Override this method and place your code here.
-     * <p>
-     * Please do not catch {@link InterruptedException}s that are thrown in your OpMode
-     * unless you are doing it to perform some brief cleanup, in which case you must exit
-     * immediately afterward. Once the OpMode has been told to stop, your ability to
-     * control hardware will be limited.
-     *
-     * @throws InterruptedException When the OpMode is stopped while calling a method
-     *                              that can throw {@link InterruptedException}
-     */
+@TeleOp
+public class TestDrivebase  extends  LinearOpMode{
+    public double sense( double x ){
+        if ( x < 0.05 ) return 0 ;
+        return x ;
+    }
+
     @Override
-    public void runOpMode() throws InterruptedException {
+    public void runOpMode (){
+        DcMotor leftMotor = hardwareMap.get(DcMotor.class,"leftMotor") ;
+        DcMotor rightMotor = hardwareMap.get(DcMotor.class,"rightMotor") ;
 
+        leftMotor.setDirection(DcMotor.Direction.REVERSE) ;
+
+        leftMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        rightMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+
+        waitForStart();
+
+        while (opModeIsActive()){
+            // Tank Mode uses one stick to control each wheel.
+            // - This requires no math, but it is hard to drive forward slowly and keep straight.
+            double leftPower  = -gamepad1.left_stick_y ;
+            double rightPower = -gamepad1.right_stick_y ;
+
+            leftMotor.setPower(leftPower);
+            rightMotor.setPower(rightPower);
+
+            telemetry.addData("Left Power:",leftPower) ;
+            telemetry.addData("Right Power:",rightPower);
+
+            telemetry.update() ;
+        }
     }
 }
