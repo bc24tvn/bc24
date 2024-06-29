@@ -36,8 +36,10 @@ public class Outtake {
         outtakeServo.setPosition(OUTTAKE_SERVO_NORM_POS);
     }
 
-    public void lift(double speed) {
+    public void liftLeft(double speed) {
         leftLift.setPower(speed);
+    }
+    public void liftRight(double speed) {
         rightLift.setPower(speed);
     }
 

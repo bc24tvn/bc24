@@ -32,11 +32,12 @@ public class TestOuttake extends LinearOpMode {
         while(opModeIsActive()) {
             // Outtake lift
             if (gamepad1.left_bumper) {
-                outtake.lift(OUTTAKE_SPEED);
+                outtake.liftLeft(OUTTAKE_SPEED);
             } else if (gamepad1.right_bumper) {
-                outtake.lift(-OUTTAKE_SPEED);
+                outtake.liftRight(-OUTTAKE_SPEED);
             } else {
-                outtake.lift(0);
+                outtake.liftLeft(0);
+                outtake.liftRight(0);
             }
 
             // Outtake servo

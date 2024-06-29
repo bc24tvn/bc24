@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.opmodes.test;
 
 import static org.firstinspires.ftc.teamcode.Constants.LIFT.LIFT_SPEED;
+import static org.firstinspires.ftc.teamcode.Constants.OUTTAKE.*;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
@@ -15,6 +16,9 @@ public class TestFull extends LinearOpMode {
     private Lift lift;
     private Intake intake;
     private Outtake outtake;
+    private double speed = 0.5;
+    private int isReversed = 1;
+    boolean lastState = false;
     @Override
     public void runOpMode() {
         lift = new Lift(hardwareMap);
@@ -34,22 +38,31 @@ public class TestFull extends LinearOpMode {
         waitForStart();
 
         while (opModeIsActive()) {
-            double leftPower  = -gamepad1.left_stick_y ;
-            double rightPower = -gamepad1.right_stick_y ;
+            double leftPower  = gamepad1.left_stick_y * speed;
+            double rightPower = gamepad1.right_stick_y * speed;
 
             leftMotor.setPower(leftPower);
             rightMotor.setPower(rightPower);
 
-            if (gamepad1.dpad_up) lift.setMotor(LIFT_SPEED,LIFT_SPEED);
-            else if (gamepad1.dpad_down) lift.setMotor(-LIFT_SPEED,-LIFT_SPEED);
+            if (gamepad1.right_bumper) speed = 1;
+            else if (gamepad1.left_bumper) speed = 0.5;
+
+            if (gamepad1.dpad_up) lift.setMotor(isReversed * LIFT_SPEED,isReversed * LIFT_SPEED);
+            else if (gamepad1.dpad_down) lift.setMotor(-isReversed * LIFT_SPEED,-isReversed * LIFT_SPEED);
             else lift.setMotor(0,0);
 
-            if (gamepad1.square) intake.setRollSpeed(0.8);
+            if (gamepad1.dpad_left) intake.setRollSpeed(0.8);
+            else if (gamepad1.dpad_right) intake.setRollSpeed(-0.8);
             else intake.setRollSpeed(0);
 
-            if (gamepad1.dpad_right) outtake.lift(0.5);
-            else if (gamepad1.dpad_left) outtake.lift(-0.5);
-            else outtake.lift(0);
+            boolean curState = (gamepad1.right_trigger > 0.1);
+            if (curState && !lastState) {
+                isReversed = -isReversed;
+            }
+            lastState = curState;
+
+            if (gamepad1.left_bumper) outtake.liftLeft(isReversed * OUTTAKE_SPEED);
+            if (gamepad1.right_bumper) outtake.liftLeft(isReversed * OUTTAKE_SPEED);
 
             outtake.setServoOut(gamepad1.triangle);
         }
