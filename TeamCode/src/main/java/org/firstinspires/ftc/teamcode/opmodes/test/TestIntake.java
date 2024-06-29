@@ -11,16 +11,11 @@ public class TestIntake extends LinearOpMode {
 
         waitForStart();
         if(opModeIsActive()) {
-            intake.deployIntake();
             intake.setRollSpeed(1);
             while (opModeIsActive()) {
                 if (gamepad1.left_bumper) {
                     if (intake.getRollSpeed() == 0) intake.setRollSpeed(1);
                     else if (intake.getRollSpeed() == 1) intake.setRollSpeed(0);
-                }
-
-                if (gamepad1.share) {
-                    intake.resetIntake();
                 }
             }
         }

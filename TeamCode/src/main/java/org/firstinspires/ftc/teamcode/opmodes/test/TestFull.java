@@ -44,9 +44,6 @@ public class TestFull extends LinearOpMode {
             else if (gamepad1.dpad_down) lift.setMotor(-LIFT_SPEED,-LIFT_SPEED);
             else lift.setMotor(0,0);
 
-            if (gamepad1.left_bumper) intake.deployIntake();
-            else if (gamepad1.right_bumper) intake.resetIntake();
-
             if (gamepad1.square) intake.setRollSpeed(0.8);
             else intake.setRollSpeed(0);
 

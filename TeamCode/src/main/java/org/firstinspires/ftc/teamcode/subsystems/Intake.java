@@ -5,27 +5,19 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
 public class Intake {
-    private DcMotor rollerMotor;
+    private DcMotor rollerMotor1, rollerMotor2;
     private Servo leftDeployServo, rightDeployServo;
 
     public Intake(HardwareMap hardwareMap) {
-        this.rollerMotor = hardwareMap.get(DcMotor.class, "rollerMotor");
-        this.leftDeployServo = hardwareMap.get(Servo.class, "leftDeployServo");
-        this.rightDeployServo = hardwareMap.get(Servo.class, "rightDeployServo");
+        this.rollerMotor1 = hardwareMap.get(DcMotor.class, "rollerMotor1");
+        this.rollerMotor2 = hardwareMap.get(DcMotor.class, "rollerMotor2");
     }
 
     public void setRollSpeed(double speed) {
-        rollerMotor.setPower(speed);
+        rollerMotor1.setPower(speed);
+        rollerMotor2.setPower(speed);
     }
     public double getRollSpeed() {
-        return rollerMotor.getPower();
-    }
-    public void deployIntake() {
-        leftDeployServo.setPosition(1);
-        rightDeployServo.setPosition(1);
-    }
-    public void resetIntake() {
-        leftDeployServo.setPosition(0);
-        rightDeployServo.setPosition(0);
+        return rollerMotor1.getPower();
     }
 }
