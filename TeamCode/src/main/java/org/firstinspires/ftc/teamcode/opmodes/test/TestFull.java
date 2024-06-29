@@ -1,6 +1,6 @@
 package org.firstinspires.ftc.teamcode.opmodes.test;
 
-import static org.firstinspires.ftc.teamcode.Constants.LIFT.LIFT_SPEED;
+import static org.firstinspires.ftc.teamcode.Constants.SPEED.*;
 import static org.firstinspires.ftc.teamcode.Constants.OUTTAKE.*;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
@@ -33,7 +33,7 @@ public class TestFull extends LinearOpMode {
 
         intake = new Intake(hardwareMap);
 
-        outtake = new Outtake(this);
+        outtake = new Outtake(hardwareMap);
 
         waitForStart();
 

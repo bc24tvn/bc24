@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.subsystems;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
 import static org.firstinspires.ftc.teamcode.Constants.OUTTAKE.*;
@@ -11,10 +12,10 @@ public class Outtake {
     private DcMotor leftLift, rightLift;
     private Servo outtakeServo;
 
-    public Outtake(LinearOpMode _opMode) {
+    public Outtake(HardwareMap hardwareMap) {
         // Get motor objects from hardwareMap
-        leftLift = _opMode.hardwareMap.get(DcMotor.class, "leftOuttakeMotor");
-        rightLift = _opMode.hardwareMap.get(DcMotor.class, "rightOuttakeMotor");
+        leftLift = hardwareMap.get(DcMotor.class, "leftOuttakeMotor");
+        rightLift = hardwareMap.get(DcMotor.class, "rightOuttakeMotor");
 
         // Reverse one motor
         rightLift.setDirection(DcMotorSimple.Direction.REVERSE);
@@ -30,7 +31,7 @@ public class Outtake {
         rightLift.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
         // Get servo object from hardwareMap
-        outtakeServo = _opMode.hardwareMap.get(Servo.class, "outtakeServo");
+        outtakeServo = hardwareMap.get(Servo.class, "outtakeServo");
 
         // Reset servo to default location
         outtakeServo.setPosition(OUTTAKE_SERVO_NORM_POS);

@@ -5,7 +5,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.subsystems.Outtake;
 
-import static org.firstinspires.ftc.teamcode.Constants.OUTTAKE.*;
+import static org.firstinspires.ftc.teamcode.Constants.SPEED.OUTTAKE_SPEED;
 
 @TeleOp(name="outtake")
 public class TestOuttake extends LinearOpMode {
@@ -23,7 +23,7 @@ public class TestOuttake extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
         // Create outtake object
-        Outtake outtake = new Outtake(this);
+        Outtake outtake = new Outtake(hardwareMap);
 
         // Wait for opMode to start
         waitForStart();
