@@ -1,11 +1,13 @@
 package org.firstinspires.ftc.teamcode.opmodes.test;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.subsystems.Outtake;
 
 import static org.firstinspires.ftc.teamcode.Constants.OUTTAKE.*;
 
+@TeleOp(name="outtake")
 public class TestOuttake extends LinearOpMode {
     /**
      * Override this method and place your code here.
