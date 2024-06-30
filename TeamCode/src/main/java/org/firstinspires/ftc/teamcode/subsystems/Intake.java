@@ -12,8 +12,6 @@ public class Intake {
     public Intake(HardwareMap hardwareMap) {
         this.rollerMotor1 = hardwareMap.get(DcMotor.class, "rollerMotor1");
         this.rollerMotor2 = hardwareMap.get(DcMotor.class, "rollerMotor2");
-        
-        this.rollerMotor1.setDirection(DcMotorSimple.Direction.REVERSE);
     }
     // set power for both motor
     public void setRollSpeed(double speed) {
