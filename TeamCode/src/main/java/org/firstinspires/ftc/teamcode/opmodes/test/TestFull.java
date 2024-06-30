@@ -65,8 +65,6 @@ public class TestFull extends LinearOpMode {
             else outtake.liftLeft(0);
             if (gamepad1.right_bumper) outtake.liftRight(isReversed * OUTTAKE_SPEED);
             else outtake.liftRight(0);
-
-            outtake.setServoOut(gamepad1.triangle);
         }
     }
 }

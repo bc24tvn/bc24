@@ -8,8 +8,13 @@ public class Constants {
 
     public static class OUTTAKE {
         // Outtake servo positions
-        public static final double OUTTAKE_SERVO_NORM_POS = 0.0;
-        public static final double OUTTAKE_SERVO_OUT_POS = 0.5;
+        public static final double OUTTAKE_SERVO_START_POS = 0.0;
+        public static final double OUTTAKE_SERVO_IN_POS = 80.0 / 270;
+        public static final double OUTTAKE_SERVO_OUT_POS = 170.0 / 270;
+
+        // Storage holder servo positions
+        public static final double STORAGE_SERVO_START_POS = 0.0;
+        public static final double STORAGE_SERVO_RELEASE_POS = 120.0 / 270;
     }
 
     public static class SPEED {

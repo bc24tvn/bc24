@@ -1,16 +1,17 @@
 package org.firstinspires.ftc.teamcode.subsystems;
 
-import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.hardware.PwmControl;
 import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.hardware.ServoImplEx;
 
 import static org.firstinspires.ftc.teamcode.Constants.OUTTAKE.*;
 
 public class Outtake {
     private DcMotor leftLift, rightLift;
-    private Servo outtakeServo;
+    private ServoImplEx outtakeServoLeft, outtakeServoRight, storageHolderServo;
 
     public Outtake(HardwareMap hardwareMap) {
         // Get motor objects from hardwareMap
@@ -31,10 +32,17 @@ public class Outtake {
         rightLift.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
         // Get servo object from hardwareMap
-        outtakeServo = hardwareMap.get(Servo.class, "outtakeServo");
+        outtakeServoLeft = (ServoImplEx) hardwareMap.get(Servo.class, "outtakeServoLeft");
+        outtakeServoRight = (ServoImplEx) hardwareMap.get(Servo.class, "outtakeServoRight");
+        storageHolderServo = (ServoImplEx) hardwareMap.get(Servo.class, "storageHolderServo");
+        outtakeServoLeft.setPwmRange(new PwmControl.PwmRange(500, 2500));
+        outtakeServoRight.setPwmRange(new PwmControl.PwmRange(500, 2500));
+        storageHolderServo.setPwmRange(new PwmControl.PwmRange(500, 2500));
 
         // Reset servo to default location
-        outtakeServo.setPosition(OUTTAKE_SERVO_NORM_POS);
+        outtakeServoLeft.setPosition(OUTTAKE_SERVO_START_POS);
+        outtakeServoRight.setPosition(1 - OUTTAKE_SERVO_START_POS);
+        storageHolderServo.setPosition(STORAGE_SERVO_START_POS);
     }
 
     public void liftLeft(double speed) {
@@ -44,11 +52,12 @@ public class Outtake {
         rightLift.setPower(speed);
     }
 
-    public void setServoOut(boolean out) {
-        if (out) {
-            outtakeServo.setPosition(OUTTAKE_SERVO_OUT_POS);
-        } else {
-            outtakeServo.setPosition(OUTTAKE_SERVO_NORM_POS);
-        }
+    public void setServoPos(double pos) {
+        outtakeServoLeft.setPosition(pos);
+        outtakeServoRight.setPosition(1 - pos);
+    }
+
+    public void setStorage(boolean open) {
+        storageHolderServo.setPosition(open ? STORAGE_SERVO_START_POS : STORAGE_SERVO_RELEASE_POS);
     }
 }
