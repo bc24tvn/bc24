@@ -68,14 +68,7 @@ public class Main extends LinearOpMode {
 
             leftMotor.setPower(leftPower);
             rightMotor.setPower(rightPower);
-
-            // Toggle reverse mode
-            boolean curState = trigger(gamepad1.right_trigger);
-            if (curState && !lastState) {
-                isReversed = -isReversed;
-            }
-            lastState = curState;
-
+            
             // Lift control
             if (gamepad1.dpad_up) {
                 lift.setMotor(isReversed * LIFT_SPEED,isReversed * LIFT_SPEED);
@@ -103,8 +96,8 @@ public class Main extends LinearOpMode {
             }
 
             // Outtake control
-            if (gamepad1.left_bumper) outtake.liftLeft(isReversed * OUTTAKE_SPEED);
-            if (gamepad1.right_bumper) outtake.liftLeft(isReversed * OUTTAKE_SPEED);
+            if (gamepad1.triangle) outtake.liftLeft(isReversed * OUTTAKE_SPEED);
+            if (gamepad1.cross) outtake.liftLeft(isReversed * OUTTAKE_SPEED);
 
             outtake.setServoOut(gamepad1.triangle);
         }
