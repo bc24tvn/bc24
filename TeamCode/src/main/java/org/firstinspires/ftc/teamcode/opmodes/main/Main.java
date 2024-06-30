@@ -72,24 +72,37 @@ public class Main extends LinearOpMode {
             double leftPower  = sense(gamepad1.left_stick_y * speed);
             double rightPower = sense(gamepad1.right_stick_y * speed);
 
+            if (leftPower == 0 && rightPower == 0) {
+                if (gamepad1.dpad_up) {
+                    leftPower = speed;
+                    rightPower = speed;
+                } else if (gamepad1.dpad_down) {
+                    leftPower = -speed;
+                    rightPower = -speed;
+                } else {
+                    leftPower = 0;
+                    rightPower = 0;
+                }
+            }
+
             leftMotor.setPower(leftPower);
             rightMotor.setPower(rightPower);
             
-            // Lift control (gamepad1)
+            // Lift control (gamepad2)
             double liftLeft = 0;
             double liftRight = 0;
 
-            if (gamepad1.left_bumper) {
+            if (gamepad2.left_bumper) {
                 liftLeft = LIFT_SPEED;
-            } else if (trigger(gamepad1.left_trigger)) {
+            } else if (trigger(gamepad2.left_trigger)) {
                 liftLeft = -LIFT_SPEED;
             } else {
                 liftLeft = 0;
             }
 
-            if (gamepad1.right_bumper) {
+            if (gamepad2.right_bumper) {
                 liftRight = LIFT_SPEED;
-            } else if (trigger(gamepad1.right_trigger)) {
+            } else if (trigger(gamepad2.right_trigger)) {
                 liftRight = -LIFT_SPEED;
             } else {
                 liftRight = 0;
@@ -97,10 +110,10 @@ public class Main extends LinearOpMode {
 
             lift.setMotor(liftLeft, liftRight);
 
-            // Intake control (gamepad2)
-            if (gamepad2.left_bumper) {
+            // Intake control (gamepad1)
+            if (gamepad1.left_bumper) {
                 intake.setRollSpeed(INTAKE_SPEED);
-            } else if (trigger(gamepad2.left_trigger)) {
+            } else if (trigger(gamepad1.left_trigger)) {
                 intake.setRollSpeed(-INTAKE_SPEED);
             } else {
                 intake.setRollSpeed(0);
@@ -111,8 +124,8 @@ public class Main extends LinearOpMode {
             double gp2r = sense(-gamepad2.right_stick_y);
 
             if (gp2l > 0 || gp2r > 0) {
-                outtake.liftLeft(sense(-gamepad2.left_stick_y) * OUTTAKE_SPEED);
-                outtake.liftRight(sense(-gamepad2.right_stick_y) * OUTTAKE_SPEED);
+                outtake.liftLeft(gp2l * OUTTAKE_SPEED);
+                outtake.liftRight(gp2l * OUTTAKE_SPEED);
             } else {
                 if (gamepad2.dpad_up) {
                     outtake.liftLeft(OUTTAKE_SPEED);
@@ -126,7 +139,7 @@ public class Main extends LinearOpMode {
                 }
             }
 
-            boolean current_outtake_button_state = trigger(gamepad2.right_trigger);
+            boolean current_outtake_button_state = trigger(gamepad1.right_trigger);
             if (current_outtake_button_state && !last_outtake_button_state) {
                 if (outtake_servo_state) {
                     outtake.setServoPos(OUTTAKE_SERVO_OUT_POS);
@@ -139,7 +152,7 @@ public class Main extends LinearOpMode {
 
             last_outtake_button_state = current_outtake_button_state;
 
-            boolean current_holder_button_state = gamepad2.right_bumper;
+            boolean current_holder_button_state = gamepad1.right_bumper;
             if (current_holder_button_state && !last_holder_button_state) {
                 storage_servo_state = !storage_servo_state;
                 outtake.setStorage(storage_servo_state);
